@@ -18,59 +18,59 @@ class NastavitvePage extends StatelessWidget {
         backgroundColor: Color.fromRGBO(145, 200, 228, 1.0),
         title: const Text('Nastavitve'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              child: Center(
-                  child: Text(
-                "LevelUp",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
-              )),
-            ),
-            ListTile(
-              title: const Text("Domov"),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const MyApp();
-                    },
-                  ),
-                );
-              },
-              leading: const Icon(
-                Icons.home,
-                color: Colors.lightBlueAccent,
-              ),
-            ),
-            ListTile(
-              title: Text("Zgodovina"),
-              onTap: () => print("Zgodovina"),
-              leading: const Icon(
-                Icons.favorite,
-                color: Colors.pinkAccent,
-              ),
-            ),
-            ListTile(
-              title: const Text("Nastavitve"),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return NastavitvePage();
-                    },
-                  ),
-                );
-              },
-              leading: const Icon(Icons.settings),
-            ),
-          ],
-        ),
-      ),
+      //drawer: Drawer(
+      //  child: ListView(
+      //    children: [
+      //      const DrawerHeader(
+      //        child: Center(
+      //            child: Text(
+      //          "LevelUp",
+      //          style: TextStyle(
+      //            fontWeight: FontWeight.bold,
+      //            fontSize: 20.0,
+      //          ),
+      //        )),
+      //      ),
+      //      ListTile(
+      //        title: const Text("Domov"),
+      //        onTap: () {
+      //          Navigator.of(context).push(
+      //            MaterialPageRoute(
+      //              builder: (BuildContext context) {
+      //                return const MyApp();
+      //              },
+      //            ),
+      //          );
+      //        },
+      //        leading: const Icon(
+      //          Icons.home,
+      //          color: Colors.lightBlueAccent,
+      //        ),
+      //      ),
+      //      ListTile(
+      //        title: Text("Zgodovina"),
+      //        onTap: () => print("Zgodovina"),
+      //        leading: const Icon(
+      //          Icons.favorite,
+      //          color: Colors.pinkAccent,
+      //        ),
+      //      ),
+      //      ListTile(
+      //        title: const Text("Nastavitve"),
+      //        onTap: () {
+      //          Navigator.of(context).push(
+      //            MaterialPageRoute(
+      //              builder: (BuildContext context) {
+      //                return NastavitvePage();
+      //              },
+      //            ),
+      //          );
+      //        },
+      //        leading: const Icon(Icons.settings),
+      //      ),
+      //    ],
+      //  ),
+      //),
       body: Center(
         
         child: Row(mainAxisAlignment:MainAxisAlignment.center, children: [
@@ -78,6 +78,8 @@ class NastavitvePage extends StatelessWidget {
             waterBox.clear();
             allTimeBox.clear();
             print("Izbrisano");
+            Navigator.of(context).pop(
+            );
           }, child: const Text("Ponastavi vse"))
         ],),
       ),

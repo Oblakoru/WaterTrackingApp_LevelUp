@@ -22,14 +22,16 @@ class _MeritvePageState extends State<MeritvePage> {
 
   int kolicinaSpiteVode = 0;
   int _sumOfIntakes = 0;
+  int dailyGoal = 0;
 
   // ta gleda kakšne so spremembe v textfieldu
   final textEditingController = TextEditingController();
+  final goalEditingController = TextEditingController();
+
   //Box v katerem se shranjujejo meritve za določen dan - ključ je datum
   Box<int> waterBox = Hive.box('merjenjeVode');
   Box<int> allTimeBox = Hive.box('allTimeBox');
-
-  //Box themeBox = Hive.box('themeBox');
+  Box goalBox = Hive.box('goalBox');
 
   //funkcija za pridobivanje datuma
   String pridobiDanasnjiDatum() {
@@ -57,6 +59,13 @@ class _MeritvePageState extends State<MeritvePage> {
       _sumOfIntakes += intake;
     });
 
+    if (!goalBox.containsKey('goal')) {
+      goalBox.put('goal', 2000);
+      dailyGoal = 2000;
+    } else {
+      pridobiGoal();
+    }
+
     //če še ni ključa za današnji datum ga ustvari
     if (!waterBox.containsKey(pridobiDanasnjiDatum())) {
       waterBox.put(pridobiDanasnjiDatum(), 0);
@@ -66,11 +75,39 @@ class _MeritvePageState extends State<MeritvePage> {
     }
   }
 
+  @override
+  void didPop() {
+    // This is called when the user navigates back to this page.
+    // Reset the state here.
+    setState(() {
+      kolicinaSpiteVode = danesSpitaVoda()!;
+      allTimeBox.values.forEach((intake) {
+        _sumOfIntakes += intake;
+      });
+    });
+  }
+
   void izracunVse() {
     _sumOfIntakes = 0;
     allTimeBox.values.forEach((intake) {
       _sumOfIntakes += intake;
     });
+  }
+
+  void pridobiGoal() {
+    if (goalBox.containsKey('goal')) {
+      setState(() {
+        dailyGoal = goalBox.get('goal');
+      });
+    }
+  }
+
+  void nastaviGoal() {
+    if (goalEditingController.text != '') {
+      goalBox.put('goal', int.parse(goalEditingController.text));
+      pridobiGoal();
+      print(dailyGoal);
+    }
   }
 
   @override
@@ -150,11 +187,14 @@ class _MeritvePageState extends State<MeritvePage> {
                 height: 20,
               ),
               Text(
-                "Količina spite vode danes: $kolicinaSpiteVode ml",
+                "$kolicinaSpiteVode/$dailyGoal ml",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
+                  fontSize: 25.0,
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Text(
                 "Lifetime: $_sumOfIntakes ml",
@@ -214,14 +254,54 @@ class _MeritvePageState extends State<MeritvePage> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                  onPressed: () => setState(() {
-                        kolicinaSpiteVode = 0;
-                        _sumOfIntakes = 0;
-                        waterBox.clear();
-                        allTimeBox.clear();
-                      }),
-                  child: const Text("Reset")),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Spremeni cilj"),
+                                  content: TextField(
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    controller: goalEditingController,
+                                    autofocus: true,
+                                    decoration: InputDecoration(
+                                        hintText: "Vnesi svoj cilj!"),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          nastaviGoal();
+                                          print(dailyGoal);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          "Submit",
+                                        ))
+                                  ],
+                                ));
+                      },
+                      child: const Text("Spremeni cilj")),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      onPressed: () => setState(() {
+                            kolicinaSpiteVode = 0;
+                            _sumOfIntakes = 0;
+                            waterBox.clear();
+                            allTimeBox.clear();
+                          }),
+                      child: const Text("Reset")),
+                ],
+              ),
             ],
           ),
         ),
