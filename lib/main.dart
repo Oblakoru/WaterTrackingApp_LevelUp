@@ -10,6 +10,10 @@ void main() async {
   // open box - represenrs the database
   Box<int> waterBox = await Hive.openBox('merjenjeVode');
   Box<int> allTimeBox = await Hive.openBox('allTimeBox');
+ // Box themeBox = await Hive.openBox('themeBox');
+
+
+
 
   runApp(const MyApp());
 }

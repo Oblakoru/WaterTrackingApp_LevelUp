@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kapljica/main.dart';
+import 'package:kapljica/nastavitve_page.dart';
 //import 'package:file/file.dart';
 
 class MeritvePage extends StatefulWidget {
@@ -27,6 +28,8 @@ class _MeritvePageState extends State<MeritvePage> {
   //Box v katerem se shranjujejo meritve za določen dan - ključ je datum
   Box<int> waterBox = Hive.box('merjenjeVode');
   Box<int> allTimeBox = Hive.box('allTimeBox');
+
+  //Box themeBox = Hive.box('themeBox');
 
   //funkcija za pridobivanje datuma
   String pridobiDanasnjiDatum() {
@@ -117,7 +120,15 @@ class _MeritvePageState extends State<MeritvePage> {
             ),
             ListTile(
               title: const Text("Nastavitve"),
-              onTap: () => print("Nastavitve"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return NastavitvePage();
+                    },
+                  ),
+                );
+              },
               leading: const Icon(Icons.settings),
             ),
           ],
