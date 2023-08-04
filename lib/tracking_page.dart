@@ -113,6 +113,8 @@ class _MeritvePageState extends State<MeritvePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomPadding: false,
       //resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromRGBO(246, 244, 235, 1.0),
       appBar: AppBar(
@@ -175,13 +177,14 @@ class _MeritvePageState extends State<MeritvePage> {
           child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 "images/health-potion.png",
-                height: 300,
+                height: 200,
               ),
               const SizedBox(
                 height: 20,
@@ -337,6 +340,9 @@ class _MeritvePageState extends State<MeritvePage> {
                       child: const Text("Reset")),
                 ],
               ),
+              Padding( // this is new
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+            ),
             ],
           ),
         ),
