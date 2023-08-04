@@ -193,6 +193,34 @@ class _MeritvePageState extends State<MeritvePage> {
                   fontSize: 25.0,
                 ),
               ),
+              Container(
+                padding: EdgeInsets.all(20.0),
+                width: 300,
+                child: TweenAnimationBuilder<double>(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeIn,
+                  tween: Tween<double>(
+                    begin: 0,
+                    end: kolicinaSpiteVode / dailyGoal,
+                  ),
+                  builder: (context, value, _) =>
+                      LinearProgressIndicator(value: value, color: Colors.blue, backgroundColor: Colors.grey, minHeight: 15,),
+                ),
+                //child: TweenAnimationBuilder<double>(
+                //  duration: const Duration(milliseconds: 500),
+                //  curve: Curves.linear,
+                //  tween: Tween<double>(
+                //    begin: 0,
+                //    end: kolicinaSpiteVode / dailyGoal,
+                //  ),
+                //  builder: (context, value, _) => LinearProgressIndicator(
+                //    minHeight: 15,
+                //    value: kolicinaSpiteVode / dailyGoal,
+                //    backgroundColor: Colors.grey,
+                //    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                //  ),
+                //),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -249,8 +277,8 @@ class _MeritvePageState extends State<MeritvePage> {
                           }
                         })
                       },
-                  child: Text("Dodaj količino!"),
-                  style: ElevatedButton.styleFrom(fixedSize: Size(200, 50))),
+                  style: ElevatedButton.styleFrom(fixedSize: Size(200, 50)),
+                  child: const Text("Dodaj količino!")),
               const SizedBox(
                 height: 20,
               ),
@@ -269,7 +297,7 @@ class _MeritvePageState extends State<MeritvePage> {
                                     ],
                                     controller: goalEditingController,
                                     autofocus: true,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         hintText: "Vnesi svoj cilj!"),
                                   ),
                                   actions: [
@@ -279,14 +307,14 @@ class _MeritvePageState extends State<MeritvePage> {
                                           print(dailyGoal);
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           "Submit",
                                         ))
                                   ],
                                 ));
                       },
                       child: const Text("Spremeni cilj")),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   ElevatedButton(
@@ -299,6 +327,13 @@ class _MeritvePageState extends State<MeritvePage> {
                             waterBox.clear();
                             allTimeBox.clear();
                           }),
+                      //onPressed: () => setState(() {
+                      //      kolicinaSpiteVode = 0;
+                      //      _sumOfIntakes = 0;
+                      //      waterBox.get(waterBox.keys.last);
+                      //      waterBox.deleteAt(allTimeBox.length - 1);
+                      //      allTimeBox.add(allTimeBox.length - 1);
+                      //    }),
                       child: const Text("Reset")),
                 ],
               ),
