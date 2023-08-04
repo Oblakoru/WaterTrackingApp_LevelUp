@@ -116,9 +116,9 @@ class _MeritvePageState extends State<MeritvePage> {
       resizeToAvoidBottomInset: false,
       //resizeToAvoidBottomPadding: false,
       //resizeToAvoidBottomInset: true,
-      backgroundColor: Color.fromRGBO(246, 244, 235, 1.0),
+      backgroundColor: Color.fromRGBO(57, 81, 68, 1.0),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(145, 200, 228, 1.0),
+        backgroundColor: Color.fromRGBO(170, 139, 86, 1.0),
       ),
       drawer: Drawer(
         child: ListView(
@@ -153,7 +153,7 @@ class _MeritvePageState extends State<MeritvePage> {
               title: Text("Zgodovina"),
               onTap: () => print("Zgodovina"),
               leading: const Icon(
-                Icons.favorite,
+                Icons.history,
                 color: Colors.pinkAccent,
               ),
             ),
@@ -174,177 +174,207 @@ class _MeritvePageState extends State<MeritvePage> {
         ),
       ),
       body: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          reverse: true,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "images/health-potion.png",
-                height: 200,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "$kolicinaSpiteVode/$dailyGoal ml",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(20.0),
-                width: 300,
-                child: TweenAnimationBuilder<double>(
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeIn,
-                  tween: Tween<double>(
-                    begin: 0,
-                    end: kolicinaSpiteVode / dailyGoal,
-                  ),
-                  builder: (context, value, _) =>
-                      LinearProgressIndicator(value: value, color: Colors.blue, backgroundColor: Colors.grey, minHeight: 15,),
-                ),
-                //child: TweenAnimationBuilder<double>(
-                //  duration: const Duration(milliseconds: 500),
-                //  curve: Curves.linear,
-                //  tween: Tween<double>(
-                //    begin: 0,
-                //    end: kolicinaSpiteVode / dailyGoal,
-                //  ),
-                //  builder: (context, value, _) => LinearProgressIndicator(
-                //    minHeight: 15,
-                //    value: kolicinaSpiteVode / dailyGoal,
-                //    backgroundColor: Colors.grey,
-                //    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                //  ),
-                //),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Lifetime: $_sumOfIntakes ml",
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.0,
-                    decoration: TextDecoration.underline),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: 300,
-                child: TextField(
-                  controller: textEditingController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Vnesi količino vode',
-                    suffixIcon: IconButton(
-                      onPressed: () => textEditingController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                  ),
-                  onChanged: (text) {
-                    //kolicinaSpiteVode = int.parse(text);
-                    print(text);
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  //onPressed: () => setState(() => kolicinaSpiteVode += 250),
-                  onPressed: () => {
-                        setState(() {
-                          try {
-                            kolicinaSpiteVode +=
-                                int.parse(textEditingController.text);
-                            waterBox.put(
-                                pridobiDanasnjiDatum(), kolicinaSpiteVode);
-                            allTimeBox
-                                .add(int.parse(textEditingController.text));
-                            _sumOfIntakes +=
-                                int.parse(textEditingController.text);
-                            print(pridobiDanasnjiDatum());
-                          } catch (e) {
-                            print("Ojoj!");
-                          }
-                        })
-                      },
-                  style: ElevatedButton.styleFrom(fixedSize: Size(200, 50)),
-                  child: const Text("Dodaj količino!")),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("Spremeni cilj"),
-                                  content: TextField(
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                    ],
-                                    controller: goalEditingController,
-                                    autofocus: true,
-                                    decoration: const InputDecoration(
-                                        hintText: "Vnesi svoj cilj!"),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          nastaviGoal();
-                                          print(dailyGoal);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          "Submit",
-                                        ))
-                                  ],
-                                ));
-                      },
-                      child: const Text("Spremeni cilj")),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                      ),
-                      onPressed: () => setState(() {
-                            kolicinaSpiteVode = 0;
-                            _sumOfIntakes = 0;
-                            waterBox.clear();
-                            allTimeBox.clear();
-                          }),
-                      //onPressed: () => setState(() {
-                      //      kolicinaSpiteVode = 0;
-                      //      _sumOfIntakes = 0;
-                      //      waterBox.get(waterBox.keys.last);
-                      //      waterBox.deleteAt(allTimeBox.length - 1);
-                      //      allTimeBox.add(allTimeBox.length - 1);
-                      //    }),
-                      child: const Text("Reset")),
-                ],
-              ),
-              Padding( // this is new
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+          child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //Image.asset(
+            //  "images/health-potion.png",
+            //  height: 200,
+            //),
+            const SizedBox(
+              height: 20,
             ),
-            ],
-          ),
+            Text(
+              "$kolicinaSpiteVode/$dailyGoal ml",
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30.0,
+                  color: Color.fromRGBO(240, 235, 206, 1.0)),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              //padding: EdgeInsets.symmetric(),
+              width: double.infinity,
+              child: TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeIn,
+                tween: Tween<double>(
+                  begin: 0,
+                  end: kolicinaSpiteVode / dailyGoal,
+                ),
+                builder: (context, value, _) => LinearProgressIndicator(
+                  value: value,
+                  color: Color.fromRGBO(170, 139, 86, 1.0),
+                  backgroundColor: Color.fromRGBO(240, 235, 206, 1.0),
+                  minHeight: 20,
+                ),
+              ),
+              //child: TweenAnimationBuilder<double>(
+              //  duration: const Duration(milliseconds: 500),
+              //  curve: Curves.linear,
+              //  tween: Tween<double>(
+              //    begin: 0,
+              //    end: kolicinaSpiteVode / dailyGoal,
+              //  ),
+              //  builder: (context, value, _) => LinearProgressIndicator(
+              //    minHeight: 15,
+              //    value: kolicinaSpiteVode / dailyGoal,
+              //    backgroundColor: Colors.grey,
+              //    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              //  ),
+              //),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Lifetime: $_sumOfIntakes ml",
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0,
+                  color: Color.fromRGBO(240, 235, 206, 1.0),
+                  decoration: TextDecoration.underline),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Color.fromRGBO(78, 108, 80, 1.0),
+                  width: 300,
+                  child: TextField(
+                    style: TextStyle(
+                      color: Color.fromRGBO(240, 235, 206, 1.0),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    controller: textEditingController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Vnesi količino vode',
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(240, 235, 206, 1.0),
+                      ),
+                      labelStyle:
+                          TextStyle(color: Color.fromRGBO(240, 235, 206, 1.0)),
+                      suffixIcon: IconButton(
+                        onPressed: () => textEditingController.clear(),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Color.fromRGBO(240, 235, 206, 1.0),
+                        ),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      //kolicinaSpiteVode = int.parse(text);
+                      print(text);
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                  
+                    //onPressed: () => setState(() => kolicinaSpiteVode += 250),
+                    onPressed: () => {
+                          setState(() {
+                            try {
+                              kolicinaSpiteVode +=
+                                  int.parse(textEditingController.text);
+                              waterBox.put(
+                                  pridobiDanasnjiDatum(), kolicinaSpiteVode);
+                              allTimeBox.add(int.parse(textEditingController.text));
+                              _sumOfIntakes +=
+                                  int.parse(textEditingController.text);
+                              textEditingController.clear();
+                              print(pridobiDanasnjiDatum());
+                            } catch (e) {
+                              print("Ojoj!");
+                            }
+                          })
+                        },
+                    //child: const Text("+", style: TextStyle(fontSize: 30), textAlign: TextAlign.center ,)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(170, 139, 86, 1.0),
+                    ),
+                    child: const Icon(Icons.add, size: 20, color: Color.fromRGBO(240, 235, 206, 1.0),)),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  
+                  style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(240, 235, 206, 1.0), fixedSize: Size(50, 30)),  
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text("Spremeni cilj"),
+                                content: TextField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                  controller: goalEditingController,
+                                  autofocus: true,
+                                  decoration: const InputDecoration(
+                                      hintText: "Vnesi svoj cilj!"),
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        nastaviGoal();
+                                        print(dailyGoal);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text(
+                                        "Potrdi",
+                                      ))
+                                ],
+                              ));
+                    },
+                    child: const Text("Cilj", style: TextStyle(color: Color.fromRGBO(57, 81, 68, 1.0) ),),),
+                const SizedBox(
+                  width: 20,
+                ),
+                //ElevatedButton(
+                //    style: ElevatedButton.styleFrom(
+                //      backgroundColor: Colors.red,
+                //    ),
+                //    onPressed: () => setState(() {
+                //          kolicinaSpiteVode = 0;
+                //          _sumOfIntakes = 0;
+                //          waterBox.clear();
+                //          allTimeBox.clear();
+                //        }),
+                //    //onPressed: () => setState(() {
+                //    //      kolicinaSpiteVode = 0;
+                //    //      _sumOfIntakes = 0;
+                //    //      waterBox.get(waterBox.keys.last);
+                //    //      waterBox.deleteAt(allTimeBox.length - 1);
+                //    //      allTimeBox.add(allTimeBox.length - 1);
+                //    //    }),
+                //    child: const Text("Reset")),
+              ],
+            ),
+            Padding(
+                // this is new
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom)),
+          ],
         ),
       )),
     );
