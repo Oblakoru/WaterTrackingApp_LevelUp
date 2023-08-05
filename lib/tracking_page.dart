@@ -14,7 +14,7 @@ class MeritvePage extends StatefulWidget {
 
 class _MeritvePageState extends State<MeritvePage> {
   @override
-  void onDestroy() {
+  void onDispose() {
     // Close all open boxes
     Hive.close();
     super.dispose();
@@ -149,26 +149,28 @@ class _MeritvePageState extends State<MeritvePage> {
                 color: Colors.lightBlueAccent,
               ),
             ),
+            //ListTile(
+            //  title: Text("Nastavitve"),
+            //  onTap: () => print("Nastavitve"),
+            //  leading: const Icon(
+            //    Icons.settings,
+            //  ),
+            //),
             ListTile(
-              title: Text("Zgodovina"),
-              onTap: () => print("Zgodovina"),
-              leading: const Icon(
-                Icons.favorite,
-                color: Colors.pinkAccent,
-              ),
-            ),
-            ListTile(
-              title: const Text("Nastavitve"),
+              title: const Text("Zgodovina"),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return NastavitvePage();
+                      return ZgodovinaPage();
                     },
                   ),
                 );
               },
-              leading: const Icon(Icons.settings),
+              leading: const Icon(
+                Icons.favorite,
+                color: Colors.pinkAccent,
+              ),
             ),
           ],
         ),
