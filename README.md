@@ -1,6 +1,6 @@
 # Water Tracker App - LevelUp
 
-![App Logo](screenshots/app_logo.png)
+![App Logo](screenshots/mainPage.png)
 
 ## Description
 
