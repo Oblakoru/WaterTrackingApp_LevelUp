@@ -8,15 +8,14 @@ The Water Tracker App is a Flutter application designed to help users monitor an
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
-*Caption for Screenshot 1*
+![Screenshot 1](screenshots/addIntake.png)
+Adding water intake
 
-![Screenshot 2](screenshots/screenshot2.png)
-*Caption for Screenshot 2*
+![Screenshot 2](screenshots/historyPage.png)
+History of water intakes
 
 ## Features
 
 - **Daily Water Intake Tracking**: Log your water consumption throughout the day.
 - **Set Goals**: Set and customize your daily water intake goals.
-- **Reminders**: Receive timely reminders to ensure you stay hydrated.
 - **Visualize Your Progress**: View historical data to track your hydration habits.
