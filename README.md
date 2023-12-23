@@ -12,7 +12,6 @@ The Water Tracker App - LevelUp is a Flutter application crafted to make monitor
 *Adding water intake*
 
 ![Screenshot 2](screenshots/historyPage.png)
-*History of water intakes*
 
 ## Features
 
